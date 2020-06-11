@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans     
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						   http://www.springframework.org/schema/context 
+						   http://www.springframework.org/schema/context/spring-context-3.0.xsd
+						   http://www.springframework.org/schema/mvc
+						   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+						   
+	
+<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->	
+					   
+	<!-- Enables the Spring MVC @Controller programming model -->
+	
+	<!-- annotation-driven tells DispatcherServlet to look for Controller classes using @Controller annotation. -->
+	<mvc:annotation-driven />
+	<!-- context:component-scan tells DispatcherServlet where to look for controller classes. -->
+	<context:component-scan base-package="com.vinayparihar.springmvc.resttemplateclient" />
+		
+
+    <!-- properties files can be made accessible to Spring via the <context:property-placeholder … > -->
+	<!-- The application.properties file should be placed under /src/main/resources so that it will be available on the classpath at runtime. -->
+	<context:property-placeholder location="classpath:application.properties" />
+		
+
+	<!-- InternalResourceViewResolver bean configuration to specify location of view pages and suffix used. Controller class methods return name of 
+		 the view page and then suffix is added to figure out the view page to use for rendering the response. -->
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<bean id="viewResolver"
+		  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		  
+		<property name="prefix">
+			   <value>/WEB-INF/views/</value>
+		</property>
+		<property name="suffix">
+			  <value>.jsp</value>
+		</property>
+		
+	</bean>
+	
+	<!-- (or) -->
+	
+	<!-- <bean id="viewResolver"
+		       class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+		    <property name="prefix" value="/WEB-INF/views/" />
+		    <property name="suffix" value=".jsp" />
+
+	</bean> -->
+	
+	<bean id="messageSource"
+		  class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		  
+		<property name="basename">
+			<value>classpath:locale/usermessages</value>
+		</property>
+		
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+		
+	</bean>
+	
+	<!-- (or) -->
+
+	
+	<!-- <bean id="messageSource"
+		  class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		  <property name="basename" value="classpath:locale/usermessages" />
+		  <property name="defaultEncoding" value="UTF-8" />
+		</bean> -->
+	
+	<!-- (or) -->
+	
+	<!-- <bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename">
+			<value>/WEB-INF/usermessages</value>
+		</property>
+	</bean> -->
+	
+	<!-- (or) -->
+	
+	<!-- <bean id="messageSource"
+		  class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/usermessages" />
+	</bean> -->
+
+
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+	</bean>
+	
+	<!-- (or) -->
+	
+	<!-- <bean id="localeResolver" 
+			   class="org.springframework.web.servlet.i18n.SessionLocaleResolver"> 
+		    <property name="defaultLocale" value="en" />
+		 </bean> -->
+
+
+	<mvc:interceptors>
+	
+		<bean id="localeChangeInterceptor"
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			   <property name="paramName" value="siteLanguage" />
+		</bean>
+
+	</mvc:interceptors>
+
+
+
+</beans>
+
+
+
+
+
+
+
